@@ -12,6 +12,8 @@ java {
 
 dependencies {
     implementation(libs.spring.boot.starter.webflux)
+    implementation(libs.spring.boot.starter.actuator)
+    implementation(libs.spring.boot.starter.validation)
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
     testImplementation(libs.spring.boot.starter.test)
@@ -24,4 +26,13 @@ tasks.named<Test>("test") {
 
 tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
     archiveBaseName.set("chatbot-backend")
+}
+
+tasks.named<ProcessResources>("processResources") {
+    val webBuild = rootProject.layout.projectDirectory.dir("apps/web/dist")
+    if (webBuild.asFile.exists()) {
+        from(webBuild) {
+            into("static")
+        }
+    }
 }

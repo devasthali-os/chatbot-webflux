@@ -1,13 +1,20 @@
 # Web — ChatGPT-like UI
 
-Vite + React chat UI. Dev server proxies API calls to the backend on port 8080.
+Vite + React. Proxies API to backend `:8080` in dev.
 
 ```bash
 # from repo root
 ./gradlew :apps:web:npm_run_dev
 
-# or from this directory
+# or locally (Node 22+ recommended)
 npm install && npm run dev
 ```
 
 Open http://localhost:5173
+
+Production build:
+
+```bash
+npm run build
+# output: dist/ — bundled into backend static/ via :apps:backend:processResources
+```

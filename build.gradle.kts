@@ -8,3 +8,9 @@ subprojects {
     group = "com.chatbot"
     version = "0.1.0-SNAPSHOT"
 }
+
+tasks.register("buildAll") {
+    group = "build"
+    description = "Build backend and web UI"
+    dependsOn(":apps:web:buildWeb", ":apps:backend:build")
+}

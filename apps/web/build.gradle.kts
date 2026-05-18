@@ -5,7 +5,7 @@ plugins {
 node {
     version.set(libs.versions.node.get())
     npmVersion.set(libs.versions.npm.get())
-    download.set(true)
+    download.set(System.getenv("CI") == null) // use system Node in CI if download fails
 }
 
 tasks.register("buildWeb") {

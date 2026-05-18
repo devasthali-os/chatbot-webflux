@@ -1,28 +1,42 @@
 package com.chatbot.backend.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
-
-import java.util.List;
+import org.springframework.web.reactive.config.ResourceHandlerRegistry;
+import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 @Configuration
-public class WebConfig {
+public class WebConfig implements WebFluxConfigurer {
+
+    private final ChatProperties chatProperties;
+
+    public WebConfig(ChatProperties chatProperties) {
+        this.chatProperties = chatProperties;
+    }
 
     @Bean
-    CorsWebFilter corsWebFilter(
-            @Value("${chat.cors.allowed-origins:http://localhost:5173}") List<String> allowedOrigins) {
+    CorsWebFilter corsWebFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(allowedOrigins);
-        config.setAllowedMethods(List.of("GET", "POST", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
+        var origins = chatProperties.cors() != null && chatProperties.cors().allowedOrigins() != null
+                ? chatProperties.cors().allowedOrigins()
+                : java.util.List.of("http://localhost:5173");
+        config.setAllowedOrigins(origins);
+        config.setAllowedMethods(java.util.List.of("GET", "POST", "OPTIONS"));
+        config.setAllowedHeaders(java.util.List.of("*"));
         config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return new CorsWebFilter(source);
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/static/")
+                .resourceChain(true);
     }
 }

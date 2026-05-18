@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: mock-llm
+
+chat:
+  max-concurrent-streams: 10
+  system-prompt: "Test assistant"
+  cors:
+    allowed-origins:
+      - http://localhost:5173
+  llm:
+    provider: mock
+    base-url: http://127.0.0.1:11434
+    model: mock
+    max-tokens: 100
+    connect-timeout: 1s
+    read-timeout: 5s

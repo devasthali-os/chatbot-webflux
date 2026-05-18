@@ -1,0 +1,8 @@
+spring:
+  config:
+    activate:
+      on-profile: mock-llm
+
+chat:
+  llm:
+    provider: mock

@@ -5,15 +5,28 @@ chat:
   cors:
     allowed-origins:
       - http://localhost:5173
+  max-concurrent-streams: 2
+  system-prompt: "You are a helpful assistant. Answer clearly and concisely."
   llm:
     provider: ollama
     base-url: http://127.0.0.1:11434
     model: llama3.2:1b
     max-tokens: 384
+    connect-timeout: 5s
+    read-timeout: 180s
 
 spring:
   application:
     name: chatbot-backend
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when_authorized
 
 logging:
   level:

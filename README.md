@@ -1,33 +1,29 @@
 # chatbot-webflux
 
-Gradle Kotlin monorepo: **reactive backend**, **ChatGPT-like web UI**, and **local Ollama** LLM.
+Gradle Kotlin monorepo: **Spring WebFlux backend**, **ChatGPT-like web UI**, and **local Ollama** LLM.
 
 ```
 chatbot-webflux/
-├── apps/
-│   ├── backend/     # Spring WebFlux (Java)
-│   └── web/         # Vite + React chat UI
-├── infra/
-│   └── ollama/      # Local LLM setup scripts
-├── docs/design/     # Architecture & API design
-├── build.gradle.kts
-└── settings.gradle.kts
+├── apps/backend/      # Spring WebFlux API
+├── apps/web/          # Vite + React chat UI
+├── infra/ollama/      # Model pull scripts
+└── docs/design/
 ```
 
 ## Prerequisites
 
-- JDK 21+ (toolchain configured in Gradle)
-- Node.js 22+ (or use Gradle Node plugin downloads)
+- JDK 21+
+- Node.js 22+ (or Gradle downloads via Node plugin)
 - [Ollama](https://ollama.com) on Intel Mac (`x86_64`)
 
 ## Quick start
 
 ```bash
-# 1. Local LLM
+# 1. LLM
 ollama serve
 ./infra/ollama/pull-models.sh
 
-# 2. Backend
+# 2. Backend (default profile → Ollama)
 ./gradlew :apps:backend:bootRun
 
 # 3. Web UI (separate terminal)
@@ -35,27 +31,35 @@ ollama serve
 # → http://localhost:5173
 ```
 
+## API
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET /heartbeat` | Service health |
+| `GET /v1/status` | Server + Ollama status |
+| `POST /v1/chat` | Stream chat (SSE) — body: `{ "message", "conversationId?" }` |
+| `GET /actuator/health` | Includes Ollama indicator |
+
 ## Gradle tasks
 
 | Task | Description |
 |------|-------------|
-| `./gradlew :apps:backend:bootRun` | Start WebFlux API on :8080 |
-| `./gradlew :apps:backend:test` | Backend tests |
-| `./gradlew :apps:web:npm_run_dev` | Vite dev server on :5173 |
-| `./gradlew :apps:web:buildWeb` | Production UI build |
+| `./gradlew buildAll` | Build UI + backend (UI copied into backend static/) |
+| `./gradlew :apps:backend:bootRun` | API on :8080 |
+| `./gradlew :apps:backend:test` | Tests (mock-llm profile) |
+| `./gradlew :apps:web:npm_run_dev` | Vite on :5173 |
 
-## API (current)
+## Profiles
 
-- `GET /heartbeat` — health
-- `GET /v2/chat` — mock SSE stream (legacy)
-- `POST /v1/chat` — planned: Ollama streaming
+| Profile | Use |
+|---------|-----|
+| default | Ollama at `127.0.0.1:11434` |
+| `mock-llm` | Tests / no Ollama — `./gradlew :apps:backend:bootRun --args='--spring.profiles.active=mock-llm'` |
 
-## Design docs
+## Hardware
+
+Tuned for **2.2 GHz quad-core Intel i7** — default model `llama3.2:1b`. See [docs/design/04-llm-integration.md](docs/design/04-llm-integration.md).
+
+## Design
 
 [docs/design/README.md](docs/design/README.md)
-
-## Related repos
-
-- https://github.com/prayagupa/retailstore-microservice
-- https://github.com/lamatola-os/netty-microservice
-- https://github.com/prayagupa/nodejs-microservice

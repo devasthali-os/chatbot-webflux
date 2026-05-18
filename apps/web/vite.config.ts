@@ -7,8 +7,8 @@ export default defineConfig({
     port: 5173,
     proxy: {
       "/v1": "http://localhost:8080",
-      "/v2": "http://localhost:8080",
       "/heartbeat": "http://localhost:8080",
+      "/actuator": "http://localhost:8080",
     },
   },
 });
