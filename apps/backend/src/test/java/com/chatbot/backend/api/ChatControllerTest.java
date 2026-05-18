@@ -1,20 +1,26 @@
 package com.chatbot.backend.api;
 
+import com.chatbot.backend.config.ChatProperties;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
+import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.Map;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 class ChatControllerTest {
 
     @Autowired
     WebTestClient webTestClient;
+
+    @Autowired
+    ChatProperties chatProperties;
 
     @Test
     void heartbeatReturnsServiceInfo() {
@@ -59,6 +65,32 @@ class ChatControllerTest {
                 .getResponseBody()
                 .collectList()
                 .block();
+    }
+
+    @Test
+    void statusAllowsLocalhostAndLoopbackOrigins() {
+        assertThat(chatProperties.cors().allowedOrigins())
+                .contains("http://127.0.0.1:8080", "http://127.0.0.1:5173");
+
+        webTestClient
+                .get()
+                .uri("/v1/status")
+                .header("Origin", "http://127.0.0.1:8080")
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectHeader()
+                .valueEquals("Access-Control-Allow-Origin", "http://127.0.0.1:8080");
+
+        webTestClient
+                .get()
+                .uri("/v1/status")
+                .header("Origin", "http://127.0.0.1:5173")
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectHeader()
+                .valueEquals("Access-Control-Allow-Origin", "http://127.0.0.1:5173");
     }
 
     @Test

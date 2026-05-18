@@ -1,11 +1,15 @@
-rootProject.name = "chatbot-webflux"
-
 pluginManagement {
     repositories {
         gradlePluginPortal()
         mavenCentral()
     }
 }
+
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
+
+rootProject.name = "chatbot-webflux"
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
@@ -15,7 +19,7 @@ dependencyResolutionManagement {
             name = "Node.js"
             setUrl("https://nodejs.org/dist/")
             patternLayout {
-                artifact("v[revision]/[artifact]-[revision]-[classifier].[ext]")
+                artifact("v[revision]/[artifact](-v[revision]-[classifier]).[ext]")
             }
             metadataSources {
                 artifact()

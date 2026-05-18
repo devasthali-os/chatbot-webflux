@@ -1,6 +1,6 @@
 [versions]
-spring-boot = "3.4.5"
-java = "21"
+spring-boot = "4.0.6"
+java = "25"
 node = "22.14.0"
 npm = "10.9.2"
 lombok = "1.18.38"
@@ -10,6 +10,7 @@ spring-boot-starter-webflux = { module = "org.springframework.boot:spring-boot-s
 spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
 spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+spring-boot-starter-webflux-test = { module = "org.springframework.boot:spring-boot-starter-webflux-test" }
 reactor-test = { module = "io.projectreactor:reactor-test" }
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 

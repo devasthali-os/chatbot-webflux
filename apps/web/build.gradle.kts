@@ -6,6 +6,7 @@ node {
     version.set(libs.versions.node.get())
     npmVersion.set(libs.versions.npm.get())
     download.set(System.getenv("CI") == null) // use system Node in CI if download fails
+    distBaseUrl.set(null as String?) // Node.js Ivy repo is declared in settings.gradle.kts
 }
 
 tasks.register("buildWeb") {

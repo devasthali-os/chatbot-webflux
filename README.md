@@ -12,7 +12,7 @@ chatbot-webflux/
 
 ## Prerequisites
 
-- JDK 21+
+- JDK 25 (Gradle auto-downloads via Foojay if not installed; Gradle **9.1+** required to run builds on JDK 25)
 - Node.js 22+ (or Gradle downloads via Node plugin)
 - [Ollama](https://ollama.com) on Intel Mac (`x86_64`)
 

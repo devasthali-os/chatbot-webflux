@@ -20,9 +20,15 @@ public class WebConfig implements WebFluxConfigurer {
     @Bean
     CorsWebFilter corsWebFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        var origins = chatProperties.cors() != null && chatProperties.cors().allowedOrigins() != null
-                ? chatProperties.cors().allowedOrigins()
-                : java.util.List.of("http://localhost:5173");
+        var configured =
+                chatProperties.cors() != null ? chatProperties.cors().allowedOrigins() : null;
+        var origins = configured != null && !configured.isEmpty()
+                ? configured
+                : java.util.List.of(
+                        "http://localhost:5173",
+                        "http://127.0.0.1:5173",
+                        "http://localhost:8080",
+                        "http://127.0.0.1:8080");
         config.setAllowedOrigins(origins);
         config.setAllowedMethods(java.util.List.of("GET", "POST", "OPTIONS"));
         config.setAllowedHeaders(java.util.List.of("*"));
