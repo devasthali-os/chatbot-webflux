@@ -23,8 +23,8 @@ chatbot-webflux/
 ollama serve
 ./infra/ollama/pull-models.sh
 
-# 2. Backend (default profile → Ollama)
-./gradlew :apps:backend:bootRun
+# 2. Backend (default profile → Ollama; auto-reloads on code changes)
+./gradlew :apps:backend:dev
 
 # 3. Web UI (separate terminal)
 ./gradlew :apps:web:npm_run_dev
@@ -45,7 +45,8 @@ ollama serve
 | Task | Description |
 |------|-------------|
 | `./gradlew buildAll` | Build UI + backend (UI copied into backend static/) |
-| `./gradlew :apps:backend:bootRun` | API on :8080 |
+| `./gradlew :apps:backend:dev` | API on :8080 (auto-reload on code change) |
+| `./gradlew :apps:backend:bootRun` | API on :8080 (no reload) |
 | `./gradlew :apps:backend:test` | Tests (mock-llm profile) |
 | `./gradlew :apps:web:npm_run_dev` | Vite on :5173 |
 

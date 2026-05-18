@@ -6,11 +6,9 @@ chat:
   max-concurrent-streams: 10
   system-prompt: "Test assistant"
   cors:
-    allowed-origins:
-      - http://localhost:5173
-      - http://127.0.0.1:5173
-      - http://localhost:8080
-      - http://127.0.0.1:8080
+    allowed-origin-patterns:
+      - http://localhost:*
+      - http://127.0.0.1:*
   llm:
     provider: mock
     base-url: http://127.0.0.1:11434

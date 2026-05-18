@@ -3,11 +3,10 @@ server:
 
 chat:
   cors:
-    allowed-origins:
-      - http://localhost:5173
-      - http://127.0.0.1:5173
-      - http://localhost:8080
-      - http://127.0.0.1:8080
+    # Vite may use 5174+ when 5173 is busy; patterns avoid 403 on proxied /v1 requests.
+    allowed-origin-patterns:
+      - http://localhost:*
+      - http://127.0.0.1:*
   max-concurrent-streams: 2
   system-prompt: "You are a helpful assistant. Answer clearly and concisely."
   llm:

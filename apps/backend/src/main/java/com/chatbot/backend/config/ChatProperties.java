@@ -12,7 +12,7 @@ public record ChatProperties(
         int maxConcurrentStreams,
         String systemPrompt) {
 
-    public record Cors(List<String> allowedOrigins) {}
+    public record Cors(List<String> allowedOrigins, List<String> allowedOriginPatterns) {}
 
     public record Llm(
             String provider,

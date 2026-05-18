@@ -69,8 +69,8 @@ class ChatControllerTest {
 
     @Test
     void statusAllowsLocalhostAndLoopbackOrigins() {
-        assertThat(chatProperties.cors().allowedOrigins())
-                .contains("http://127.0.0.1:8080", "http://127.0.0.1:5173");
+        assertThat(chatProperties.cors().allowedOriginPatterns())
+                .contains("http://127.0.0.1:*");
 
         webTestClient
                 .get()
@@ -85,12 +85,12 @@ class ChatControllerTest {
         webTestClient
                 .get()
                 .uri("/v1/status")
-                .header("Origin", "http://127.0.0.1:5173")
+                .header("Origin", "http://127.0.0.1:5175")
                 .exchange()
                 .expectStatus()
                 .isOk()
                 .expectHeader()
-                .valueEquals("Access-Control-Allow-Origin", "http://127.0.0.1:5173");
+                .valueEquals("Access-Control-Allow-Origin", "http://127.0.0.1:5175");
     }
 
     @Test
