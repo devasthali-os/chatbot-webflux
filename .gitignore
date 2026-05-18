@@ -1,5 +1,43 @@
-.idea/
-target/
-*.iml
+# OS
+.DS_Store
+Thumbs.db
 
-*gradle
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+.vscode/
+
+# Gradle
+.gradle/
+**/.gradle/
+build/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+gradle-app.setting
+.gradletasknamecache
+
+# JVM / Java
+*.class
+*.log
+hs_err_pid*
+replay_pid*
+
+# Spring Boot
+spring-boot-*.log
+
+# Node (apps/web)
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+.npm
+*.tsbuildinfo
+
+# Local env / secrets
+.env
+.env.*

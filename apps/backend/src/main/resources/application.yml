@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+chat:
+  cors:
+    allowed-origins:
+      - http://localhost:5173
+  llm:
+    provider: ollama
+    base-url: http://127.0.0.1:11434
+    model: llama3.2:1b
+    max-tokens: 384
+
+spring:
+  application:
+    name: chatbot-backend
+
+logging:
+  level:
+    com.chatbot: DEBUG
