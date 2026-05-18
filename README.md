@@ -2,6 +2,8 @@
 
 Gradle Kotlin monorepo: **Spring WebFlux backend**, **ChatGPT-like web UI**, and **local Ollama** LLM.
 
+![Local Chat UI](docs/chatbot.png)
+
 ```
 chatbot-webflux/
 ├── apps/backend/      # Spring WebFlux API
