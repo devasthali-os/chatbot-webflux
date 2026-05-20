@@ -93,3 +93,6 @@ To try another tag temporarily, override the model name in config or pass a mode
 | Wrong model name in errors | Tag must be exactly `llama3.2:1b` (see `ollama list`) |
 
 More tuning and API notes: [docs/design/04-llm-integration.md](../../docs/design/04-llm-integration.md).
+
+
+See: https://huggingface.co/meta-llama/Llama-3.2-1B
